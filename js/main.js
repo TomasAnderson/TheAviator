@@ -87,10 +87,36 @@ function createLights() {
   scene.add(shadowLight);
 }
 
+///////////////////////////////create the sea//////////////////////////////////
+function Sea () {
+  //1. create a geometry
+  var geom = new THREE.CylinderGeometry(600, 600, 800, 40, 10);
+  geom.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+  //2. create a material
+  var mat = new THREE.MeshPhongMaterial({
+    color: Colors.blue,
+    transparent: true,
+    opacity: 0.8,
+    shading: THREE.FlatShading
+  });
+
+  //3. pass geom and mat to a mesh
+  this.mesh = new THREE.Mesh(geom, mat);
+  this.mesh.receiveShadow = true;
+}
+
+var sea;
+
+function createSea () {
+  sea = new Sea();
+  sea.mesh.position.y = -600;
+  scene.add(sea.mesh);
+}
+
 function init () {
   createScene();
   createLights();
-  // createSea();
+  createSea();
   // createSky();
   // createPlane();
 
