@@ -10,6 +10,7 @@ var Colors = {
   blue:0x68c3c0,
 };
 
+///////////////////////////////create the scene//////////////////////////////////
 // Three.js variables
 var scene,
     camera, fieldOfView, aspectRatio, nearPlane, farPlane,
@@ -61,12 +62,34 @@ function createScene () {
    }, false);
 }
 
+///////////////////////////////create the light//////////////////////////////////
+var hemisphereLight, shadowLight;
 
+function createLights() {
+  //create the hemisphere light
+  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa,0x000000, .9);
 
+  //create the directional light
+  shadowLight = new THREE.DirectionalLight(0xffffff, .9);
+  shadowLight.position.set(150, 350, 350);
+  shadowLight.castShadow = true;
+  shadowLight.shadow.camera.left = -400;
+  shadowLight.shadow.camera.right = 400;
+  shadowLight.shadow.camera.top = 400;
+  shadowLight.shadow.camera.bottom = -400;
+  shadowLight.shadow.camera.near = 1;
+  shadowLight.shadow.camera.far = 1000;
+  shadowLight.shadow.mapSize.width = 2048;
+  shadowLight.shadow.mapSize.height = 2048;
+
+  //add them to the scene
+  scene.add(hemisphereLight);  
+  scene.add(shadowLight);
+}
 
 function init () {
   createScene();
-  // createLights();
+  createLights();
   // createSea();
   // createSky();
   // createPlane();
